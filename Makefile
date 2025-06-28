@@ -18,4 +18,4 @@ test:
 	$(Q)go test ./...
 
 act-test:
-	$(Q)act --container-architecture linux/amd664
+	$(Q)act pull_request
