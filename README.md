@@ -60,25 +60,62 @@ The server will typically listen on `localhost:50051` (or a configured port).
 
 ### Running the Client
 
-To run the example client that interacts with the server:
+To build the client:
 
 ```bash
-go run cmd/client/main.go
+go build -o cmd/client/client cmd/client/main.go
 ```
 
-*(Note: The client's functionality will depend on its implementation, likely demonstrating authentication requests.)*
+To run the client and interact with the server:
+
+```bash
+./cmd/client/client
+```
+
+This will display the available commands and flags.
 
 ## Usage
 
-The Veil Auth service exposes a gRPC API for authentication operations. You can interact with it by generating client stubs in your preferred language using the `.proto` files located in `pkg/grpc/auth/`.
+The Veil Auth client now uses Cobra for command-line interface management.
 
-Example gRPC service definition (from `pkg/grpc/auth/auth.proto`):
+### Global Flags
 
-```protobuf
-// Simplified example
-service AuthService {
-  rpc Authenticate (AuthRequest) returns (AuthResponse);
-}
+-   `--server-address <address>`: gRPC server address (default: `localhost:50051`)
+-   `--log-level <level>`: Log level (debug, info, warn, error, fatal, panic) (default: `info`)
+
+### Authenticate Command
+
+Authenticates a user with the provided username and password, returning an authentication token.
+
+```bash
+./cmd/client/client authenticate -u <username> -p <password>
+```
+
+**Flags:**
+
+-   `-u, --username <username>`: Username for authentication (required)
+-   `-p, --password <password>`: Password for authentication (required)
+
+### Validate Command
+
+Validates an authentication token, returning its validity status and associated user ID.
+
+```bash
+./cmd/client/client validate -t <token>
+```
+
+**Flags:**
+
+-   `-t, --token <token>`: Token to validate (required)
+
+Example:
+
+```bash
+# Authenticate a user
+./cmd/client/client authenticate -u testuser -p testpassword
+
+# Validate a token
+./cmd/client/client validate -t <received_token>
 ```
 
 Refer to the `pkg/grpc/auth/auth.proto` file for the complete service definition and message structures.
