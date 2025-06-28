@@ -5,18 +5,18 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/Erik142/veil-auth/internal/auth"
+	"github.com/Erik142/veil-auth/pkg/auth"
 	pb "github.com/Erik142/veil-auth/pkg/grpc/auth"
 )
 
 // Server is the gRPC server for the AuthService.
 type Server struct {
 	pb.UnimplementedAuthServiceServer
-	auth *auth.InMemoryAuthenticator
+	auth auth.Authenticator
 }
 
 // NewServer creates a new gRPC server.
-func NewServer(auth *auth.InMemoryAuthenticator) *Server {
+func NewServer(auth auth.Authenticator) *Server {
 	return &Server{auth: auth}
 }
 
