@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 RUN protoc --go_out=. --go_opt=paths=source_relative \
   --go-grpc_out=. --go-grpc_opt=paths=source_relative \
-  ./pkg/proto/nebulacert.proto
+  ./pkg/grpc/auth/auth.proto
 # Use a Go image to build the application
 FROM golang:1.24.3 AS builder
 
