@@ -34,3 +34,6 @@ go.work.sum
 # Generated binaries
 cmd/client/client
 cmd/server/server
+
+# Generated protobuf files
+pkg/grpc/auth/*.pb.go
